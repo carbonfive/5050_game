@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Tinkering with Chicken Movement for "Chickens in Kenya"</title>
+	<style>
+		canvas{ border: 1px dashed #CCC; display: block; margin: 10px 0;}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script>
+		var chickenImg;
+		var animateId;
+		var dashContext;
+		
+		var chicken = function() {
+			var x = 0;
+			var y = 0;
+			var steps = 0;
+
+			return {
+				draw: function () {
+					dashContext.drawImage(chickenImg, x, y);
+				},
+				move: function () {
+					x += 2*Math.random() - 1;
+					y += 2*Math.random() - 1;
+				},
+				dash: function () {
+					if (steps < 20) {
+						x += 5;
+					}
+					steps += 1;
+				}
+			};
+		};
+		
+		window.onload = function() {
+			chickenImg = document.getElementById('chicken');
+			var dashCanvas = document.getElementById("dash");
+			if (dashCanvas.getContext) {
+				dashContext = dashCanvas.getContext("2d");
+	        	var dashChicken = chicken();
+	
+				animateId = setInterval(function() {
+					dashContext.clearRect(0,0,640,480);
+					dashChicken.draw();
+					dashChicken.dash();
+				}, 25);
+		
+			}
+		};
+		
+		function stop() {
+			clearInterval(animateId);
+		}
+		
+		setTimeout(stop, 60000);
+	</script>
+</head>
+<body>
+	<img style="display: none;" id="chicken" src="chicken.png">
+	<canvas id="dash" width="200" height="100">
+		This prototype requires a browser that supports the HTML5 canvas element.
+	</canvas>
+	
+	<canvas id="jump" width="200" height="100">
+		This prototype requires a browser that supports the HTML5 canvas element.
+	</canvas>
+
+	<p>Work-in-progress.</p>
+	<p>Inspired by <a target="_blank" href="http://newswatch.nationalgeographic.com/2011/04/26/“farming-out”-agricultural-advice-through-radio-and-sms/">"Farming Out" Agricultural Advice Through Radio and SMS</a> by National Geographic.</p>
+	<p>Intended to be part of the <a target="_blank" href="http://5050.gd/">50/50 Project</a> to provide relief for the East African famine.</p>
+	
+</body>
+</html>
