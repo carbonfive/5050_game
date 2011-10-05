@@ -4,8 +4,12 @@
 	<meta charset="UTF-8" />
 	<title>Chickens in Kenya</title>
 	<style>
-		#game{ border: 1px solid black; display: block; margin: auto;}
+		#game{ border: 1px solid #CCC; display: block; margin: auto}
 		#score-text{ text-align: center; font-size: 36px; font-family: 'PTF Nordic Rnd', 'Arial';}
+		#splash-screen{ width: 640px; height: 80px; border: 1px solid #CCC; display: block; background: white; text-align: center; margin: auto; padding: 200px 0px;}
+		#splash-screen a{ font-family: 'PTF Nordic Rnd', 'Arial'; display: block; line-height: 1.5em;}
+		#splash-screen #donate{ font-size: 36px; text-decoration: none; color: orange;}
+		#splash-screen #play{ font-family: 'PTF Nordic Rnd', 'Arial'; color: #B54028; margin-left: 175px; cursor: pointer;}
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 	<script>
@@ -64,8 +68,11 @@
 				}
 			}
 		};
+				
+	 	start = function() {
+			$('#splash-screen').hide();
+			$('#game').show();
 		
-		window.onload = function() {
 			chickenImg = document.getElementById('chicken');
 			hutImg = document.getElementById('hut');
 			hutX = (640 - hutImg.width)*Math.random();
@@ -114,20 +121,28 @@
 					});
 				}
 			}
+			
+			setTimeout(stop, 60000);
 		};
 		
 		function stop() {
 			clearInterval(animateId);
 		}
 		
-		setTimeout(stop, 60000);
+		window.onload = function () {
+			$('#play').click(start);
+		}
 	</script>
 </head>
 <body>
-	<a target="_blank" href="http://5050.gd/campaigns/42/donate">Make a donation!</a>
+	<div id="splash-screen">
+		<a id="donate" target="_blank" href="http://5050.gd/campaigns/42/donate">Make a donation!</a>
+		<a id="play">Play!</a>
+	</div>
+
 	<img style="display: none;" id="chicken" src="chicken.png">
 	<img style="display: none;" id="hut" src="hut.png">
-	<canvas id="game" width="640" height="480">
+	<canvas id="game" width="640" height="480" style="display: none;">
 		This game requires a browser that supports the HTML5 canvas element.
 	</canvas>
 	<p id="score-text">Score: <span id="score">0</span></p>
