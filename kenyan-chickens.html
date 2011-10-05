@@ -16,12 +16,14 @@
 		var chickenImg;
 		var canvas;
 		var context;
+		var levels = [];
 		var chickens = [];
 		var hutImg;
 		var hutX;
 		var hutY;
 		var animateId;
 		var score = 0;
+		var caughtThisLevel = 0;
 		
 		var chicken = function() {
 			var x = (640 - chickenImg.width)*Math.random();
@@ -68,6 +70,11 @@
 				}
 			}
 		};
+		
+		levels = [
+			function () { chickens = [chicken(), chicken(), chicken()]; },
+			function () { chickens = [chicken(), chicken(), chicken(), chicken()]; }
+		]
 				
 	 	start = function() {
 			$('#splash-screen').hide();
@@ -80,13 +87,7 @@
 			canvas = document.getElementById("game");  
 			if (canvas.getContext) {  
 	        	context = canvas.getContext("2d");
-				chickens.push(chicken());
-				chickens.push(chicken());
-				chickens.push(chicken());
-				chickens.push(chicken());
-				chickens.push(chicken());
-				chickens.push(chicken());
-				chickens.push(chicken());
+				levels.shift().call();
 				
 				animateId = setInterval(function() {
 					context.clearRect(0,0,640,480);
@@ -114,7 +115,16 @@
 						if (chickens[i].distanceFrom(hutX + 70, hutY + 70) < 50) {
 							if (chickens[i].catch()) {
 								score += 1;
-								$('#score').text(score);								
+								caughtThisLevel += 1;
+								$('#score').text(score);
+								if (caughtThisLevel == chickens.length) {
+									if (levels.length > 0) {
+										caughtThisLevel = 0;
+										levels.shift().call();
+									} else {
+										stop();
+									}
+								}
 							}
 						}
 						chickens[i].endDrag();
@@ -126,6 +136,7 @@
 		};
 		
 		function stop() {
+			console.log("Game Over.");
 			clearInterval(animateId);
 		}
 		
