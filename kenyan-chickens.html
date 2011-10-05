@@ -5,7 +5,7 @@
 	<title>Chickens in Kenya</title>
 	<style>
 		#game{ border: 1px solid #CCC; display: block; margin: auto}
-		#score-text{ text-align: center; font-size: 36px; font-family: 'PTF Nordic Rnd', 'Arial';}
+		#level-text, #score-text{ text-align: center; font-size: 36px; font-family: 'PTF Nordic Rnd', 'Arial';}
 		#splash-screen{ width: 640px; height: 80px; border: 1px solid #CCC; display: block; background: white; text-align: center; margin: auto; padding: 200px 0px;}
 		#splash-screen a{ font-family: 'PTF Nordic Rnd', 'Arial'; display: block; line-height: 1.5em;}
 		#splash-screen #donate{ font-size: 36px; text-decoration: none; color: orange;}
@@ -120,8 +120,10 @@
 								if (caughtThisLevel == chickens.length) {
 									if (levels.length > 0) {
 										caughtThisLevel = 0;
+										$('#level').text(parseInt($('#level').text()) + 1);
 										levels.shift().call();
 									} else {
+										$('#level-text').text("You win! Congratulations!");
 										stop();
 									}
 								}
@@ -136,7 +138,6 @@
 		};
 		
 		function stop() {
-			console.log("Game Over.");
 			clearInterval(animateId);
 		}
 		
@@ -156,6 +157,7 @@
 	<canvas id="game" width="640" height="480" style="display: none;">
 		This game requires a browser that supports the HTML5 canvas element.
 	</canvas>
+	<p id="level-text">Level: <span id="level">1</span></p>
 	<p id="score-text">Score: <span id="score">0</span></p>
 
 	<p>Work-in-progress.</p>
