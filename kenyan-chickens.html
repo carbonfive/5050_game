@@ -4,7 +4,7 @@
 	<meta charset="UTF-8" />
 	<title>Chickens in Kenya</title>
 	<style>
-		html, body{ margin: 0; padding: 0; background-color: black;}
+		html, body{ margin: 0; padding: 0; background-color: black; overflow: hidden;}
 	
 		#game{ display: block; margin: auto;}
 		#level-text, #score-text{ text-align: center; font-size: 36px; font-family: 'PTF Nordic Rnd', 'Arial';}
@@ -145,16 +145,27 @@
 			clearInterval(animateId);
 		}
 		
+		function sizeGameAndDrawTerrain() {
+			$('#game').attr('width', Math.min(window.innerWidth, terrainImg.width));
+			$('#game').attr('height', Math.min(window.innerHeight, terrainImg.height));
+			context.drawImage(
+				terrainImg,
+				Math.min(0, (window.innerWidth - terrainImg.width)/2),
+				Math.min(0, window.innerHeight - terrainImg.height)
+			);
+		}
+		
 		window.onload = function () {
 			terrainImg = document.getElementById('terrain');
-
-			$('#game').attr('width', Math.min(window.innerWidth, 1280));
-			$('#game').attr('height', Math.min(window.innerHeight, 851));
 			
 			canvas = document.getElementById("game");  
 			if (canvas.getContext) {  
 	        	context = canvas.getContext("2d");
-				context.drawImage(terrainImg, 0, Math.min(0, window.innerHeight - 851));
+				sizeGameAndDrawTerrain();
+				
+				$(window).resize(function () {
+					sizeGameAndDrawTerrain();
+				});
 			}
 		}
 	</script>
