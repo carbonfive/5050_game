@@ -102,7 +102,7 @@
 				
 				animateId = setInterval(function() {
 					context.clearRect(0,0,640,480);
-					context.drawImage(terrainImg, 0, 0);
+					sizeGameAndDrawTerrain();
 					context.drawImage(hutImg, hutX, hutY);
 					$.each(chickens, function (i) {
 						chickens[i].draw();
@@ -128,7 +128,6 @@
 							if (chickens[i].catch()) {
 								score += 1;
 								caughtThisLevel += 1;
-								$('#score').text(score);
 								if (caughtThisLevel == chickens.length) {
 									if (levels.length > 0) {
 										caughtThisLevel = 0;
@@ -136,6 +135,7 @@
 										levels.shift().call();
 									} else {
 										$('#level-text').text("You win! Congratulations!");
+										sizeGameAndDrawTerrain();
 										stop();
 									}
 								}
@@ -161,6 +161,10 @@
 				Math.min(0, (window.innerWidth - terrainImg.width)/2),
 				Math.min(0, window.innerHeight - terrainImg.height)
 			);
+			
+			// Also draw score
+			context.font = "20pt PTF Nordic Rnd";
+			context.fillText("Score: " + score, 10, 30);
 		}
 		
 		window.onload = function () {
