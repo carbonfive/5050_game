@@ -34,6 +34,7 @@
 		var hutY;
 		var animateId;
 		var score = 0;
+		var level = 1;
 		var caughtThisLevel = 0;
 		
 		var chicken = function() {
@@ -131,10 +132,10 @@
 								if (caughtThisLevel == chickens.length) {
 									if (levels.length > 0) {
 										caughtThisLevel = 0;
-										$('#level').text(parseInt($('#level').text()) + 1);
+										level += 1;
 										levels.shift().call();
 									} else {
-										$('#level-text').text("You win! Congratulations!");
+										level = "You win!";
 										sizeGameAndDrawTerrain();
 										stop();
 									}
@@ -165,6 +166,9 @@
 			// Also draw score
 			context.font = "20pt PTF Nordic Rnd";
 			context.fillText("Score: " + score, 10, 30);
+			
+			// and level
+			context.fillText("Level: " + level, 10, 60);
 		}
 		
 		window.onload = function () {
