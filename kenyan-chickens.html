@@ -35,9 +35,13 @@
 		var level = 1;
 		var caughtThisLevel = 0;
 		
+		function playableStartingY(img) {
+			 return Math.max(0, $('#game').attr('height') - 450 - img.height) + (Math.min(450, $('#game').attr('height')) - img.height) * Math.random();
+		}
+		
 		var chicken = function() {
 			var x = ($('#game').attr('width') - chickenImg.width)*Math.random();
-			var y = ($('#game').attr('height') - chickenImg.height)*Math.random();
+			var y =playableStartingY(chickenImg);
 			var dragging = false;
 			var caught = false;
 			
@@ -93,7 +97,7 @@
 			chickenImg = document.getElementById('chicken');
 			hutImg = document.getElementById('hut');
 			hutX = ($('#game').attr('width') - hutImg.width)*Math.random();
-			hutY = ($('#game').attr('height') - hutImg.height)*Math.random();
+			hutY = playableStartingY(hutImg);
 			canvas = document.getElementById("game");  
 			if (canvas.getContext) {  
 	        	context = canvas.getContext("2d");
