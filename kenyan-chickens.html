@@ -42,29 +42,31 @@
 		}
 		
 		var chicken = function() {
-			var x = ($('#game').attr('width') - chickenImg.width)*Math.random();
-			var y =playableStartingY(chickenImg);
 			var dragging = false;
 			var caught = false;
 			
 			return {
+				x: ($('#game').attr('width') - chickenImg.width)*Math.random(),
+				y: playableStartingY(chickenImg),
 				draw: function () {
-					context.drawImage(chickenImg, x, y);
+					context.drawImage(chickenImg, this.x, this.y);
 				},
 				move: function () {
 					if (!dragging && !caught) {
-						x += 2*Math.random() - 1;
-						y += 2*Math.random() - 1;
+						this.x += 2*Math.random() - 1;
+						this.y += 2*Math.random() - 1;
 					}
 				},
 				startDrag: function(xClick, yClick) {
 					if (!caught) {
-						var xOffset = xClick - x;
-						var yOffset = yClick - y;
+						var xOffset = xClick - this.x;
+						var yOffset = yClick - this.y;
 						dragging = true;
+						
+						var that = this;
 						canvas.onmousemove = function(e) {
-							x = e.x - canvas.offsetLeft - xOffset;
-							y = e.y - canvas.offsetTop - yOffset + document.body.scrollTop;
+							that.x = e.x - canvas.offsetLeft - xOffset;
+							that.y = e.y - canvas.offsetTop - yOffset + document.body.scrollTop;
 						}
 					}
 				},
@@ -73,7 +75,7 @@
 					dragging = false;
 				},
 				distanceFrom: function(x2, y2) {
-					return Math.sqrt(Math.pow(x + 24 - x2, 2) + Math.pow(y + 28 - y2, 2));
+					return Math.sqrt(Math.pow(this.x + 24 - x2, 2) + Math.pow(this.y + 28 - y2, 2));
 				},
 				catch: function() {
 					if (dragging) {
