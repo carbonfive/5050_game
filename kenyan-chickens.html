@@ -53,9 +53,12 @@
 				},
 				move: function () {
 					if (!dragging && !caught) {
-						this.x += 2*Math.random() - 1;
-						this.y += 2*Math.random() - 1;
+						this.doMove();
 					}
+				},
+				doMove: function () {
+					this.x += 2*Math.random() - 1;
+					this.y += 2*Math.random() - 1;
 				},
 				startDrag: function(xClick, yClick) {
 					if (!caught) {
@@ -89,8 +92,36 @@
 			}
 		};
 		
+		var straightLineChicken = function () {
+			var baseChicken = chicken();
+			baseChicken.doMove = function () {
+				baseChicken.x += 1;
+			}
+			return baseChicken;
+		}
+		
+		var pacingChicken = function () {
+			var dx = -1 + 2*Math.random();
+			var dy = -1 + 2*Math.random();
+			var stepsInThisDirection = 0;
+			var magnitude = 3;
+			
+			var baseChicken = chicken();
+			baseChicken.doMove = function () {
+				baseChicken.x += magnitude*dx;
+				baseChicken.y += magnitude*dy;
+				stepsInThisDirection += 1;
+				if (stepsInThisDirection > 20) {
+					stepsInThisDirection = 0;
+					dx = -1 + 2*Math.random();
+					dy = -1 + 2*Math.random();
+				}
+			}
+			return baseChicken;
+		}
+		
 		levels = [
-			function () { chickens = [chicken(), chicken(), chicken()]; },
+			function () { chickens = [pacingChicken(), pacingChicken(), pacingChicken()]; },
 			function () { chickens = [chicken(), chicken(), chicken(), chicken()]; }
 		]
 				
