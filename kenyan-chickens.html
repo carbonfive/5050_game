@@ -37,6 +37,10 @@
 		var level = 1;
 		var caughtThisLevel = 0;
 		
+		function playableMinY() {
+			return Math.max(0, $('#game').attr('height') - 450);
+		}
+		
 		function playableStartingY(img) {
 			 return Math.max(0, $('#game').attr('height') - 450 - img.height) + (Math.min(450, $('#game').attr('height')) - img.height) * Math.random();
 		}
@@ -113,6 +117,11 @@
 			
 			var baseChicken = chicken();
 			baseChicken.doMove = function () {
+				if (baseChicken.x < 0) { dx = Math.abs(dx); stepsInThisDirection = 0; }
+				if (baseChicken.x + chickenImg.width > $('#game').attr('width')) { dx = -Math.abs(dx); stepsInThisDirection = 0; }
+				if (baseChicken.y < playableMinY()) { dy = Math.abs(dy); stepsInThisDirection = 0; }
+				if (baseChicken.y + chickenImg.height > $('#game').attr('height')) { dy = -Math.abs(dy); stepsInThisDirection = 0; }
+				
 				baseChicken.x += magnitude*dx;
 				baseChicken.y += magnitude*dy;
 				stepsInThisDirection += 1;
