@@ -100,29 +100,32 @@
 			return baseChicken;
 		}
 		
-		var pacingChicken = function () {
-			var dx = -1 + 2*Math.random();
-			var dy = -1 + 2*Math.random();
-			var stepsInThisDirection = 0;
-			var magnitude = 3;
+		var pacingChicken = function (magnitude, changeDirectionsAfterSteps) {
+			var dx, dy, stepsInThisDirection;
+			
+			function init() {
+				stepsInThisDirection = 0;
+				dx = -1 + 2*Math.random();
+				dy = -1 + 2*Math.random();
+			}
+			
+			init();
 			
 			var baseChicken = chicken();
 			baseChicken.doMove = function () {
 				baseChicken.x += magnitude*dx;
 				baseChicken.y += magnitude*dy;
 				stepsInThisDirection += 1;
-				if (stepsInThisDirection > 20) {
-					stepsInThisDirection = 0;
-					dx = -1 + 2*Math.random();
-					dy = -1 + 2*Math.random();
+				if (stepsInThisDirection > changeDirectionsAfterSteps) {
+					init();
 				}
 			}
 			return baseChicken;
 		}
 		
 		levels = [
-			function () { chickens = [pacingChicken(), pacingChicken(), pacingChicken()]; },
-			function () { chickens = [chicken(), chicken(), chicken(), chicken()]; }
+			function () { chickens = [pacingChicken(3, 20), pacingChicken(4, 15), pacingChicken(5, 25)]; },
+			function () { chickens = [pacingChicken(4,15), pacingChicken(4,15), pacingChicken(5,20), pacingChicken(5,15), pacingChicken(6,20)]; }
 		]
 				
 	 	start = function() {
