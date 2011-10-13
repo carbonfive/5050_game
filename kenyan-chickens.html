@@ -27,6 +27,7 @@
 		var canvas;
 		var context;
 		var levels = [];
+		var timeLimit = Date.now()/1000;
 		var chickens = [];
 		var terrainImg;
 		var hutImg;
@@ -133,42 +134,54 @@
 		}
 		
 		levels = [
-			function () { chickens = [
-				pacingChicken(3, 20),
-				pacingChicken(4, 15),
-				pacingChicken(5, 25)
-			];},
-			function () { chickens = [
-				pacingChicken(4,15),
-				pacingChicken(4,15),
-				pacingChicken(5,20),
-				pacingChicken(5,15),
-				pacingChicken(6,20)
-			];},
-			function () { chickens = [
-				pacingChicken(1,5),
-				pacingChicken(1,5),
-				pacingChicken(3,30),
-				pacingChicken(3,30),
-				pacingChicken(3,30),
-				pacingChicken(4,15),
-				pacingChicken(5,20),
-				pacingChicken(5,15),
-				pacingChicken(6,20)
-			];},
-			function () { chickens = [
-				pacingChicken(1,5),
-				pacingChicken(3,30),
-				pacingChicken(4,15),
-				pacingChicken(5,20),
-				pacingChicken(5,15),
-				pacingChicken(6,20),
-				pacingChicken(9,9),
-				pacingChicken(10,10),
-				pacingChicken(11,11),
-				pacingChicken(10,8),
-				pacingChicken(10,6),
-			];}
+			function () {
+				chickens = [
+					pacingChicken(3, 20),
+					pacingChicken(4, 15),
+					pacingChicken(5, 25)
+				];
+				setTimeLimit(10);
+			},
+			function () {
+				chickens = [
+					pacingChicken(4,15),
+					pacingChicken(4,15),
+					pacingChicken(5,20),
+					pacingChicken(5,15),
+					pacingChicken(6,20)
+				];
+				setTimeLimit(20);
+			},
+			function () {
+					chickens = [
+					pacingChicken(1,5),
+					pacingChicken(1,5),
+					pacingChicken(3,30),
+					pacingChicken(3,30),
+					pacingChicken(3,30),
+					pacingChicken(4,15),
+					pacingChicken(5,20),
+					pacingChicken(5,15),
+					pacingChicken(6,20)
+				];
+				setTimeLimit(30);
+			},
+			function () {
+				chickens = [
+					pacingChicken(1,5),
+					pacingChicken(3,30),
+					pacingChicken(4,15),
+					pacingChicken(5,20),
+					pacingChicken(5,15),
+					pacingChicken(6,20),
+					pacingChicken(9,9),
+					pacingChicken(10,10),
+					pacingChicken(11,11),
+					pacingChicken(10,8),
+					pacingChicken(10,6),
+				];
+				setTimeLimit(45);
+			}
 		]
 				
 	 	start = function() {
@@ -188,6 +201,12 @@
 					context.clearRect(0,0,640,480);
 					sizeGameAndDrawTerrain();
 					context.drawImage(hutImg, hutX, hutY);
+					if (timeLeft() <= 0) {
+						level = "Out of time!"
+						sizeGameAndDrawTerrain();
+						context.drawImage(hutImg, hutX, hutY);
+						stop();
+					}
 					$.each(chickens, function (i) {
 						chickens[i].draw();
 						chickens[i].move();
@@ -244,12 +263,20 @@
 				Math.min(0, window.innerHeight - terrainImg.height)
 			);
 			
-			// Also draw score
+			// draw display
 			context.font = "20pt PTF Nordic Rnd";
-			context.fillText("Score: " + score, 10, 30);
 			
-			// and level
-			context.fillText("Level: " + level, 10, 60);
+			context.fillText("Seconds left: " + timeLeft(), 10, 30);
+			context.fillText("Score: " + score, 10, 60);
+			context.fillText("Level: " + level, 10, 90);			
+		}
+		
+		function timeLeft() {
+			 return Math.max(0, Math.ceil(timeLimit - Date.now()/1000));
+		}
+		
+		function setTimeLimit(seconds) {
+			timeLimit = Date.now()/1000 + seconds;
 		}
 		
 		window.onload = function () {
