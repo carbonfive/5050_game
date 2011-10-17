@@ -38,6 +38,12 @@
 		var score = 0;
 		var level = 1;
 		var caughtThisLevel = 0;
+		
+		function extractTouch(e) {
+			return e.originalEvent.touches && e.originalEvent.touches[0]
+				|| e.originalEvent.changedTouches && e.originalEvent.changedTouches[0]
+				|| e;
+		}
 
 		function playableMinY() {
 			return Math.max(0, $('#game').attr('height') - 450);
@@ -76,14 +82,16 @@
 						dragging = true;
 
 						that = this;
-						canvas.onmousemove = function (e) {
-							that.x = e.x - canvas.offsetLeft - xOffset;
-							that.y = e.y - canvas.offsetTop - yOffset + document.body.scrollTop;
-						};
+						$('canvas').bind('mousemove touchmove', function (e) {
+							e.preventDefault();
+							e = extractTouch(e);
+							that.x = e.pageX - canvas.offsetLeft - xOffset;
+							that.y = e.pageY - canvas.offsetTop - yOffset + document.body.scrollTop;
+						});
 					}
 				},
 				endDrag: function () {
-					canvas.onmousemove = null;
+					$('canvas').unbind('mousemove touchmove');
 					dragging = false;
 				},
 				distanceFrom: function (x2, y2) {
@@ -148,7 +156,7 @@
 					pacingChicken(4, 15),
 					pacingChicken(5, 25)
 				];
-				setTimeLimit(10);
+				setTimeLimit(30);
 			},
 			function () {
 				chickens = [
@@ -221,9 +229,11 @@
 					});
 				}, 25);
 
-				canvas.onmousedown = function (e) {
-					var x = e.x - canvas.offsetLeft;
-					var y = e.y - canvas.offsetTop + document.body.scrollTop;
+				$('canvas').bind('mousedown touchstart', function (e) {
+					e.preventDefault();
+					e = extractTouch(e);
+					var x = e.pageX - canvas.offsetLeft;
+					var y = e.pageY - canvas.offsetTop + document.body.scrollTop;
 
 					$.each(chickens, function (i) {
 						var distance = chickens[i].distanceFrom(x, y);
@@ -231,9 +241,11 @@
 							chickens[i].startDrag(x, y);
 						}
 					});
-				}
+				});
 
-				canvas.onmouseup = function (e) {
+				$('canvas').bind('mouseup touchend', function (e) {
+					e.preventDefault();
+					e = extractTouch(e);
 					$.each(chickens, function (i) {
 						if (chickens[i].distanceFrom(hutX + 70, hutY + 70) < 50) {
 							if (chickens[i].catchIt()) {
@@ -254,7 +266,7 @@
 						}
 						chickens[i].endDrag();
 					});
-				};
+				});
 			}
 		};
 
