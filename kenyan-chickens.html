@@ -1,29 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
 	<title>Chickens in Kenya</title>
-	<meta name="viewport" content="user-scalable=no">
-	<style>
-		html, body{ margin: 0; padding: 0; background-color: black; overflow: hidden; font-family: 'PTF Nordic Rnd', 'Arial';}
-		#game{ display: block; margin: auto;}
-		#splash-screen{ width: 100%; height: 100%; text-align: center; position: absolute; background-color: transparent;}
-		#intro{ background: url(translucent.png); padding: 25px; width: 300px; margin-left:-150px; left: 50%; top: 25px; position: relative;}
 
-		#splash-screen #intro a{color: #756F47;}
-		#splash-screen #intro h1, #splash-screen #intro h1 a{font-size: 36px; color: #756F47; margin-top: 0;}
-		#splash-screen #intro h2{ font-size: 10px;}
-		
-		#splash-screen #intro #verify{ margin-top: 40px;}
-		#splash-screen #intro #verify h2{ margin-bottom: 10px; font-size: 16px;}
-		#splash-screen #intro p{ font-size: 10px; line-height: 1.2em;}
-		#splash-screen #intro #verify ul{ list-style: none; margin: 0; padding: 0; margin-bottom: 20px;}
-		#splash-screen #intro #verify label{ width: 4em; display: inline-block; text-align: right; font-size: 12px;}
-		
-		#splash-screen a#play{ color: rgb(90, 109, 120); margin-left: 175px; cursor: pointer;}
+	<meta charset="UTF-8">
+
+	<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	
+	<style>	
+		html, body{ margin: 0; padding: 0; overflow: hidden;}
+		html, body{ font-family: 'Trebuchet MS';}
+		.layer{ position: absolute; width: 100%; height: 100%;}
+		#narrative{ margin: 20px; padding: 20px; background: url(translucent.png); text-align: center; font-weight: bold; font-size: 24px; -moz-border-radius: 15px; border-radius: 15px;}
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-	<script>
+	<script>		
 		var chickenImg;
 		var canvas;
 		var context;
@@ -311,32 +304,41 @@
 			}
 		};
 	</script>
+	<script>
+		var narrativeStep = 0;
+		var narrative = [
+			"Sight-seeing in Kenya! And you've volunteered for a day on the farm.",
+			"Simon welcomes your help. He's a local farmer raising indigenous chickens, and these otherwise hardy birds need protection from Newcastle disease.",
+			"When Simon leaves to pick up the vaccines he ordered, he leaves you in charge. All is well until...",
+			"The chickens have flown the coop!",
+			"They're running amok, and it's your job to drag them back to their hut.",
+			"But hurry up! Simon's already on his way back!"
+		];
+		
+		$(document).ready(function () {
+			$('#narrative-next').bind('click', function () {
+				narrativeStep++;
+				$('#narrative p').text(narrative[narrativeStep]);
+				if (narrativeStep >= narrative.length - 1) {					
+					$('#narrative-next').hide();
+					$('#narrative-play').show();
+				}
+			});
+			$('#narrative-play').bind('click', function () {
+				$('.layer').hide();
+				start();
+			});
+		});
+	</script>
 </head>
 <body>
-	<div id="splash-screen">
-		<div id="intro">
-			<hgroup>
-				<h1><a id="donate" target="_blank" href="http://5050.gd/campaigns/42/donate">Buy Chickens<br>For Your Coop</a></h1>
-				<h2>Proceeds benefit UNICEF famine relief in East Africa.</h2>
-			</hgroup>
-			<p>Inspired by<br><a target="_blank" href="http://newswatch.nationalgeographic.com/2011/04/26/“farming-out”-agricultural-advice-through-radio-and-sms/">"Farming Out" Agricultural Advice Through Radio and SMS</a><br>by National Geographic.</p>
-			<div id="verify">
-				<h2>Verify your purchase</h2>
-				<ul>
-					<li>
-						<label for="name">Name:</label>
-						<input type="text" name="name" id="name">
-					</li>
-					<li>
-						<label for="name">Amount:</label>
-						<input type="text" name="amount" id="amount">
-					</li>
-				</ul>
-				
-	        	<a id="play">Click to Play!</a>
-			</div>
+	<div class="layer">
+		<div id="narrative">
+			<p>Sight-seeing in Kenya! And you've volunteered for a day on the farm.</p>
+			<div id="narrative-next">next</div>
+			<div id="narrative-play" style="display: none;">play</div>
 		</div>
-    </div>
+	</div>
 
 	<img style="display: none;" id="terrain" src="mountain-backed--savannah.jpg">
 	<img style="display: none;" id="chicken" src="chicken.png">
