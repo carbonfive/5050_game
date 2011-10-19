@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Chickens in Kenya</title>
+	<title>uChicken?</title>
 
 	<meta charset="UTF-8">
 
@@ -55,7 +55,13 @@
 				x: ($('#game').attr('width') - chickenImg.width) * Math.random(),
 				y: playableStartingY(chickenImg),
 				draw: function () {
-					context.drawImage(chickenImg, this.x, this.y);
+					if (dragging) {
+						context.drawImage(chickenImg, this.x, this.y, 1.5*chickenImg.width, 1.5*chickenImg.height);
+					} else if (caught) {
+						context.drawImage(chickenImg, this.x, this.y, 0.5*chickenImg.width, 0.5*chickenImg.height);
+					} else {
+						context.drawImage(chickenImg, this.x, this.y);
+					}
 				},
 				move: function () {
 					if (!dragging && !caught) {
