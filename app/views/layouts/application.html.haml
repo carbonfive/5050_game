@@ -12,7 +12,6 @@
     -# Mobile device size
     %meta{'name' => 'HandheldFriendly', :content => 'True'}
     %meta{'name' => 'MobileOptimized', :content => '320'}
-    -# setting maximum-scale=1 and user-scalable=no eliminates jQueryMobile screen rotation issues
     %meta{'name' => 'viewport', :content => 'user-scalable=no, width=device-width, height=device-height'}
 
     -# Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading
@@ -24,7 +23,7 @@
         html, body { margin: 0; padding: 0; overflow: hidden;}
         html, body { font-family: 'Trebuchet MS';}
         .layer { position: absolute; width: 100%; height: 100%;}
-        #narrative { margin: 20px; padding: 20px; background: url(translucent.png); text-align: center; font-weight: bold; font-size: 24px; -moz-border-radius: 15px; border-radius: 15px;}
+        #narrative { margin: 20px; padding: 20px; background: url(/images/translucent.png); text-align: center; font-weight: bold; font-size: 24px; -moz-border-radius: 15px; border-radius: 15px;}
 
   %body
     = yield
