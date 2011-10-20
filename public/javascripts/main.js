@@ -2,6 +2,7 @@ var chickenImg;
 var canvas;
 var context;
 var levels = [];
+var timeStart;
 var timeLimit = Date.now() / 1000;
 var chickens = [];
 var terrainImg;
@@ -36,7 +37,13 @@ var chicken = function () {
     x: ($('#game').attr('width') - chickenImg.width) * Math.random(),
     y: playableStartingY(chickenImg),
     draw: function () {
-      context.drawImage(chickenImg, this.x, this.y);
+      if (dragging) {
+        context.drawImage(chickenImg, this.x, this.y, 1.5*chickenImg.width, 1.5*chickenImg.height);
+      } else if (caught) {
+        context.drawImage(chickenImg, this.x, this.y, 0.5*chickenImg.width, 0.5*chickenImg.height);
+      } else {
+        context.drawImage(chickenImg, this.x, this.y);
+      }
     },
     move: function () {
       if (!dragging && !caught) {
@@ -120,6 +127,7 @@ var pacingChicken = function (magnitude, changeDirectionsAfterSteps) {
 };
 
 function setTimeLimit(seconds) {
+  timeStart = Date.now()/1000;
   timeLimit = Date.now()/1000 + seconds;
 }
 
@@ -130,7 +138,7 @@ levels = [
       pacingChicken(4, 15),
       pacingChicken(5, 25)
     ];
-    setTimeLimit(30);
+    setTimeLimit(10);
   },
   function () {
     chickens = [
@@ -140,7 +148,7 @@ levels = [
       pacingChicken(5, 15),
       pacingChicken(6, 20)
     ];
-    setTimeLimit(20);
+    setTimeLimit(15);
   },
   function () {
     chickens = [
@@ -154,7 +162,7 @@ levels = [
       pacingChicken(5, 15),
       pacingChicken(6, 20)
     ];
-    setTimeLimit(30);
+    setTimeLimit(15);
   },
   function () {
     chickens = [
@@ -170,7 +178,7 @@ levels = [
       pacingChicken(10, 8),
       pacingChicken(10, 6)
     ];
-    setTimeLimit(45);
+    setTimeLimit(20);
   }
 ];
 
@@ -252,6 +260,30 @@ function timeLeft() {
    return Math.max(0, Math.ceil(timeLimit - Date.now() / 1000));
 }
 
+// remaing in [0.0, 1.0]
+function drawBar(y, height, remaining, label) {
+  context.save();
+
+  width = canvas.width;
+  if (remaining > 0.67) {
+    context.fillStyle = "green";
+  } else if (remaining > 0.33) {
+    context.fillStyle = "yellow";
+  } else {
+    context.fillStyle = "red";
+  }
+
+
+  context.fillRect((1-remaining)*canvas.width,y,canvas.width,y+height);
+
+  context.font = "20pt PTF Nordic Rnd";
+  context.fillStyle = "#000";
+  context.textAlign = 'right';
+  context.fillText(label, canvas.width, y + height/2 + 15);
+
+  context.restore();
+}
+
 function sizeGameAndDrawTerrain() {
   $('#game').attr('width', Math.min(window.innerWidth, terrainImg.width));
   $('#game').attr('height', Math.min(window.innerHeight, terrainImg.height));
@@ -264,9 +296,9 @@ function sizeGameAndDrawTerrain() {
   // draw display
   context.font = "20pt PTF Nordic Rnd";
 
-  context.fillText("Seconds left: " + timeLeft(), 10, 30);
-  context.fillText("Score: " + score, 10, 60);
-  context.fillText("Level: " + level, 10, 90);
+  drawBar(10, 20, (timeLimit - Date.now()/1000)/(timeLimit - timeStart), "Seconds left");
+  context.fillText("Score: " + score, 10, 70);
+  context.fillText("Level: " + level, 10, 100);
 }
 
 window.onload = function () {
