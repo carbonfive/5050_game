@@ -1,0 +1,12 @@
+.bundle
+log
+out
+.DS_Store
+db/*.sqlite3
+.rakeTasks
+.generators
+*.iml
+*.ipr
+*.iws
+.idea
+db/schema.rb
