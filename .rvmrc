@@ -1,1 +1,1 @@
-rvm --create use ruby-1.9.2-p180@foragesf
+rvm --create use ruby-1.9.2-p180@uchicken
