@@ -37,6 +37,9 @@
 		var score = 0;
 		var level = 1;
 		var caughtThisLevel = 0;
+
+		var taps = 0;
+		var tapsOnTarget = 0;
 		
 		function extractTouch(e) {
 			return e.originalEvent.touches && e.originalEvent.touches[0]
@@ -236,6 +239,8 @@
 				}, 25);
 
 				$('canvas').bind('mousedown touchstart', function (e) {
+					taps++; console.log("Grabs: " + taps);
+
 					e.preventDefault();
 					e = extractTouch(e);
 					var x = e.pageX - canvas.offsetLeft;
@@ -244,6 +249,7 @@
 					$.each(chickens, function (i) {
 						var distance = chickens[i].distanceFrom(x, y);
 						if (distance < 25) {
+							tapsOnTarget++; console.log("Holds: " + tapsOnTarget);
 							chickens[i].startDrag(x, y);
 						}
 					});
@@ -278,6 +284,10 @@
 
 		function stop() {
 			clearInterval(animateId);
+			var holdGrabRatio = Math.round(100.0 * tapsOnTarget / taps);
+			$('#narrative p').text('Birds In The Hand: ' + tapsOnTarget + ' Attempts: ' + taps + ' - You got ' + holdGrabRatio + '% of the chickens you went for.');
+			$('#narrative .actions').hide();
+			$('#narrative').parent().show();
 		}
 
 		function timeLeft() {
@@ -361,7 +371,7 @@
 				}
 			});
 			$('#narrative-skip, #narrative-play').bind('click', function () {
-				$('.layer').hide();
+				$('#narrative').parent().hide();
 				start();
 			});
 		});
