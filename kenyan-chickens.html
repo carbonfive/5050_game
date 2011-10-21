@@ -298,7 +298,6 @@
 			
 			context.fillRect((1-remaining)*canvas.width,y,canvas.width,y+height);
 
-			context.font = "20pt PTF Nordic Rnd";
 			context.fillStyle = "#000";
 			context.textAlign = 'right';
 			context.fillText(label, canvas.width, y + height/2 + 15);
@@ -316,7 +315,7 @@
 			);
 
 			// draw display
-			context.font = "20pt PTF Nordic Rnd";
+			context.font = "20pt Trebuchet MS";
 
 			drawBar(10, 20, (timeLimit - Date.now()/1000)/(timeLimit - timeStart), "Seconds left");
 			context.fillText("Score: " + score, 10, 70);
