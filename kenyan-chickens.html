@@ -17,6 +17,8 @@
 		html, body{ font-family: 'Trebuchet MS';}
 		.layer{ position: absolute; width: 100%; height: 100%;}
 		#narrative{ margin: 20px; padding: 20px; background: url(translucent.png); text-align: center; font-weight: bold; font-size: 24px; -moz-border-radius: 15px; border-radius: 15px;}
+		ul.actions li{ list-style-type: none; display: inline-block; width: 25%;}
+		#narrative-skip{ color: #BBB;}
 	</style>
 	<script src="jquery-1.6.4.min.js"></script>
 	<script>		
@@ -358,7 +360,7 @@
 					$('#narrative-play').show();
 				}
 			});
-			$('#narrative-play').bind('click', function () {
+			$('#narrative-skip, #narrative-play').bind('click', function () {
 				$('.layer').hide();
 				start();
 			});
@@ -369,8 +371,11 @@
 	<div class="layer">
 		<div id="narrative">
 			<p>Sight-seeing in Kenya! And you've volunteered for a day on the farm.</p>
-			<div id="narrative-next">next</div>
-			<div id="narrative-play" style="display: none;">play</div>
+			<ul class="actions">
+				<li id="narrative-skip">skip</li>
+				<li id="narrative-next">next</li>
+				<li id="narrative-play" style="display: none;">play</li>
+			</ul>
 		</div>
 	</div>
 
