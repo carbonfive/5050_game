@@ -14,6 +14,9 @@ var score = 0;
 var level = 1;
 var caughtThisLevel = 0;
 
+var taps = 0;
+var tapsOnTarget = 0;
+
 function extractTouch(e) {
   return e.originalEvent.touches && e.originalEvent.touches[0]
     || e.originalEvent.changedTouches && e.originalEvent.changedTouches[0]
@@ -190,8 +193,8 @@ start = function () {
   hutImg = document.getElementById('hut');
   hutX = ($('#game').attr('width') - hutImg.width) * Math.random();
   hutY = playableStartingY(hutImg);
-  canvas = document.getElementById("game");
-  if (canvas.getContext) {
+  canvas = document.getElementById("game");  
+  if (canvas.getContext) {  
     context = canvas.getContext("2d");
     levels.shift().call();
 
@@ -212,6 +215,8 @@ start = function () {
     }, 25);
 
     $('canvas').bind('mousedown touchstart', function (e) {
+      taps++; console.log("Grabs: " + taps);
+
       e.preventDefault();
       e = extractTouch(e);
       var x = e.pageX - canvas.offsetLeft;
@@ -220,6 +225,7 @@ start = function () {
       $.each(chickens, function (i) {
         var distance = chickens[i].distanceFrom(x, y);
         if (distance < 25) {
+          tapsOnTarget++; console.log("Holds: " + tapsOnTarget);
           chickens[i].startDrag(x, y);
         }
       });
@@ -254,6 +260,10 @@ start = function () {
 
 function stop() {
   clearInterval(animateId);
+  var holdGrabRatio = Math.round(100.0 * tapsOnTarget / taps);
+  $('#narrative p').text('Birds In The Hand: ' + tapsOnTarget + ' Attempts: ' + taps + ' - You got ' + holdGrabRatio + '% of the chickens you went for.');
+  $('#narrative .actions').hide();
+  $('#narrative').parent().show();
 }
 
 function timeLeft() {
@@ -294,7 +304,7 @@ function sizeGameAndDrawTerrain() {
   );
 
   // draw display
-  context.font = "20pt PTF Nordic Rnd";
+  context.font = "20pt Trebuchet MS";
 
   drawBar(10, 20, (timeLimit - Date.now()/1000)/(timeLimit - timeStart), "Seconds left");
   context.fillText("Score: " + score, 10, 70);

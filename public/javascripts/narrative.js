@@ -17,8 +17,8 @@ $(document).ready(function () {
       $('#narrative-play').show();
     }
   });
-  $('#narrative-play').bind('click', function () {
-    $('.layer').hide();
+  $('#narrative-skip, #narrative-play').bind('click', function () {
+    $('#narrative').parent().hide();
     start();
   });
 });
