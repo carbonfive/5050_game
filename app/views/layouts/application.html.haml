@@ -20,10 +20,12 @@
 
     %style{:type=>"text/css"}
       :plain
-        html, body { margin: 0; padding: 0; overflow: hidden;}
-        html, body { font-family: 'Trebuchet MS';}
-        .layer { position: absolute; width: 100%; height: 100%;}
-        #narrative { margin: 20px; padding: 20px; background: url(/images/translucent.png); text-align: center; font-weight: bold; font-size: 24px; -moz-border-radius: 15px; border-radius: 15px;}
+        html, body{ margin: 0; padding: 0; overflow: hidden;}
+        html, body{ font-family: 'Trebuchet MS';}
+        .layer{ position: absolute; width: 100%; height: 100%;}
+        #narrative{ margin: 20px; padding: 20px; background: url(/images/translucent.png); text-align: center; font-weight: bold; font-size: 24px; -moz-border-radius: 15px; border-radius: 15px;}
+        ul.actions li{ list-style-type: none; display: inline-block; width: 25%;}
+        #narrative-skip{ color: #BBB;}
 
   %body
     = yield
