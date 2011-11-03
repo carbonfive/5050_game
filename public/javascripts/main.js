@@ -324,5 +324,12 @@ window.onload = function () {
     });
 
     $('#play').click(start);
+
+    $('.layer').children().hide();
+    $('.layer, #welcome').show();
+    $('#welcome-continue').bind('click', function () {
+      $('#welcome').hide();
+      $('#narrative').show();
+    });
   }
 };
