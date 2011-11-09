@@ -10,3 +10,6 @@ db/*.sqlite3
 *.iws
 .idea
 db/schema.rb
+vendor/cache/*
+spec/*
+.rspec
