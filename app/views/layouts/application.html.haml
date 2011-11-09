@@ -4,7 +4,7 @@
     -# meta:charset stays at the top
     %meta{'charset' => 'utf-8'}
     %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge,chrome=1'}
-    %meta{'name' => 'apple-mobile-web-app-capable', :content => 'IE=edge,chrome=1'}
+    %meta{'name' => 'apple-mobile-web-app-capable', :content => 'yes'}
     %meta{'name' => 'apple-mobile-web-app-status-bar-style', :content => 'black'}
 
     %title uChicken?
@@ -18,12 +18,17 @@
     %meta{'http-equiv' => 'cleartype', :content => 'on'}
     = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js','main','narrative'
 
+    %link{:rel => "apple-touch-icon", :href => "/images/apple-touch-icon.png"}
+    %link{:rel => "apple-touch-startup-image", :href => "/images/startup.png"}
+
     %style{:type=>"text/css"}
       :plain
-        html, body { margin: 0; padding: 0; overflow: hidden;}
-        html, body { font-family: 'Trebuchet MS';}
-        .layer { position: absolute; width: 100%; height: 100%;}
-        #narrative { margin: 20px; padding: 20px; background: url(/images/translucent.png); text-align: center; font-weight: bold; font-size: 24px; -moz-border-radius: 15px; border-radius: 15px;}
+        html, body{ margin: 0; padding: 0; overflow: hidden;}
+        html, body{ font-family: 'Trebuchet MS';}
+        .layer{ position: absolute; width: 100%; height: 100%;}
+        #narrative{ margin: 20px; padding: 20px; background: url(/images/translucent.png); text-align: center; font-weight: bold; font-size: 24px; -moz-border-radius: 15px; border-radius: 15px;}
+        ul.actions li{ list-style-type: none; display: inline-block; width: 25%;}
+        #narrative-skip{ color: #BBB;}
 
   %body
     = yield
