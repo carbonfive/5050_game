@@ -1,3 +1,5 @@
+var BASE_URL = 'http://uchicken.heroku.com'
+
 var chickenImg;
 var canvas;
 var context;
@@ -324,5 +326,24 @@ window.onload = function () {
     });
 
     $('#play').click(start);
+
+    $('.layer').children().hide();
+    $('#welcome-continue').bind('click', function () {
+      $('#welcome').hide();
+      $('#narrative').show();
+    });
+
+    $.getJSON(BASE_URL + '/statistics', function(statistics) {
+      var progress_numerator = statistics.ksh_raised - statistics.last_feature_unlocked_at;
+      var progress_denominator = statistics.next_feature_unlocks_at - statistics.last_feature_unlocked_at
+      var progress_percent = Math.floor(progress_numerator * 100 / progress_denominator);
+
+      $('#raised').text(statistics.ksh_raised);
+      $('#unlocked').text(statistics.number_of_features_unlocked);
+      $('#progress').text(progress_percent + "% (" + progress_numerator + "/" + progress_denominator + " Ksh)");
+
+    });
+
+    $('.layer, #welcome').show();
   }
 };

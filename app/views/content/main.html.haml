@@ -1,5 +1,30 @@
-.layer
-  #narrative
+.layer{:style=>"display: none;"}
+  #welcome.message
+    %hgroup
+      %h1 uChicken?
+      %h2 Play the Game. Fight the Famine.
+    %p
+      %span.text You and fellow gamers have collectively
+      %span.stats
+        raised
+        %span#raised ?
+        Kenyan Shillings
+      %span.text and
+      %span.stats
+        unlocked
+        %span#unlocked ?
+        Feature
+    %p
+      %span.text You are
+      %span.stats
+        %span#progress ?
+      %span.text closer to your next power-up
+    
+    %ul.actions
+      %li#welcome-continue play
+      %li#welcome-donate
+        %a{:target => "_blank", :href => "http://5050.gd/campaigns/42/donate"} donate
+  #narrative.message
     %p Sight-seeing in Kenya! And you've volunteered for a day on the farm.
     %ul.actions
       %li#narrative-skip skip
