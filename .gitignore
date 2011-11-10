@@ -1,6 +1,6 @@
 .bundle
-log/
-tmp/
+log/*
+tmp/*
 out
 .DS_Store
 db/*.sqlite3
