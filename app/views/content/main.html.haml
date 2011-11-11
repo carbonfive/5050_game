@@ -1,3 +1,4 @@
+- @javascripts << ['main','narrative']
 .layer{:style=>"display: none;"}
   #welcome.message
     %hgroup
@@ -19,11 +20,11 @@
       %span.stats
         %span#progress ?
       %span.text closer to your next power-up
-    
+
     %ul.actions
       %li#welcome-continue play
       %li#welcome-donate
-        %a{:target => "_blank", :href => "http://5050.gd/campaigns/42/donate"} donate
+        %a{:target => "_blank", :href => "http://5050.gd/campaigns/42/donate?return_url=http%3A%2F%2Fuchicken.heroku.com%2Fcallback%3Fname%3D%24%7Bname%7D%26amp%3Bamount%3D%24%7Bamount%7D"} donate
   #narrative.message
     %p Sight-seeing in Kenya! And you've volunteered for a day on the farm.
     %ul.actions

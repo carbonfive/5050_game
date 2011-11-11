@@ -16,15 +16,15 @@
 
     -# Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading
     %meta{'http-equiv' => 'cleartype', :content => 'on'}
-    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js','main','narrative'
-
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'
+    = javascript_include_tag inject_js
     %link{:rel => "apple-touch-icon", :href => "/images/apple-touch-icon.png"}
     %link{:rel => "apple-touch-startup-image", :href => "/images/startup.png"}
 
     %style{:type=>"text/css"}
       :plain
         html, body, h1, h2, ul, ol, li{ margin: 0; padding: 0;}
-        html, body{ overflow: hidden;}
+        html, body{ overflow: hidden; background-color: #000; text-align: center;}
         html, body{ font-family: 'Trebuchet MS';}
         .layer{ position: absolute; width: 100%; height: 100%;}
         .message{ margin: 20px; padding: 20px; background: url(/images/translucent.png); text-align: center; font-weight: bold; font-size: 24px; -moz-border-radius: 15px; border-radius: 15px;}
@@ -36,6 +36,6 @@
         #welcome > p > span{ display: block;}
         #welcome .text{ font-size: 14px; font-weight: normal}
         #welcome .stats{ font-size: 24px;}
-
+    = stylesheet_link_tag 'main'
   %body
     = yield
