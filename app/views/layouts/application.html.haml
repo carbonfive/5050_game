@@ -17,6 +17,8 @@
     -# Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading
     %meta{'http-equiv' => 'cleartype', :content => 'on'}
     = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'
+    :javascript
+      var BASE_URL = "http://#{HOST_NAME}"
     = javascript_include_tag inject_js
     %link{:rel => "apple-touch-icon", :href => "/images/apple-touch-icon.png"}
     %link{:rel => "apple-touch-startup-image", :href => "/images/startup.png"}

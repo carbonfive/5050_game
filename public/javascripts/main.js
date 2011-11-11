@@ -1,4 +1,3 @@
-var BASE_URL = 'http://uchicken.heroku.com'
 
 var chickenImg;
 var canvas;
