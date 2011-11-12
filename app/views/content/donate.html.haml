@@ -7,6 +7,6 @@
     - if flash[:error]
       %p.flash= flash[:error]
     %a.rounded.donate{:href => 'http://5050.gd/campaigns/42/donate?return_url=http%3A%2F%2Fuchicken.heroku.com%2Fdonate%3Fname%3D%24%7Bname%7D%26amp%3Bamount%3D%24%7Bamount%7D'} DONATE TO PLAY
-    %input{:type=>"text", :name=>"name", :placeholder => '- or enter the name you used for a prior donation -'}
+    %input{:type=>"text", :name=>"name", :placeholder => '- or enter donor name -'}
     %div
       %input.rounded.button.verify{:type=>"submit", :value=>"VERIFY DONATION"}

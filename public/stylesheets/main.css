@@ -1,12 +1,12 @@
 html,body {
   background-color: #232323;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1em;
 }
 #main {
 	padding: 0;
   margin: 0 auto;
-  width: 1280px;
-  height: 851px;
+  min-height: 480px;
   text-align: center;
   background: transparent url(/images/mountain-backed--savannah.jpg) no-repeat 50% 50%;
   overflow: hidden;
@@ -23,50 +23,53 @@ html,body {
 }
 
 #main form {
-  width: 350px;
-  margin: 30px auto;
+  width: 80%;
+  padding: 5%;
+  margin: 1% auto;
   overflow:hidden;
   border: 1px solid #272727;
   border-top: 1px solid #272727;
   border-bottom: 1px solid #272727;
-  -moz-box-shadow: 3px 3px 20px #2f384b;
-  -webkit-box-shadow: 3px 3px 20px #2f384b;
-  box-shadow: 3px 3px 20px #2f384b;
+  -moz-box-shadow: 1px 1px 20px #2f384b;
+  -webkit-box-shadow: 1px 1px 20px #2f384b;
+  box-shadow: 1px 1px 20px #2f384b;
   -webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 }
 
 #main form input, #main form div {
   color: #fff;
-  width: 280px;
-  margin: 10px auto;
+  width: 90%;
+  margin: 1% auto;
   display: block;
+  text-align: center;
 }
 
 #main form input, #main form a.button {
-  padding: 5px 15px;
+  padding: 5px 2%;
   background-color: #FFF;
   color: #272727;
 }
 
 #main form div {
-  width: 310px;
+  width: 90%;
 }
 
 #main form input.button,#main form a.button {
-  width: 125px;
+  width: 50%;
   float: right;
-  margin-left: 5px;
+  -webkit-appearance: none;
+  margin: 2% 0;
 }
 
 #main form a.donate {
   display: block;
   background-color: #272727;
-  padding: 15px 30px;
+  padding: 15px 2%;
   font-size: 16px;
-  margin: 50px auto;
+  margin: 5% auto;
   text-decoration: none;
-  width: 200px;
+  width: 80%;
   color: #fff;
 }
 
