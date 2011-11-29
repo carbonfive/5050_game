@@ -44,6 +44,9 @@ class FiftyFifty
     return get("/projects/#{project_id}/pledges")
   end
 
+  def project_search(project_id)
+    return Hashie::Mash.new(self.class.get("/projects/#{project_id}/donations/search?name%3DCourtney%20Hemphill")).data
+  end
 
   # List all campaigners currently running projects on 50/50.
   def campaigners
